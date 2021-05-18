@@ -1,5 +1,6 @@
 package org.launchcode.hellospring.controllers;
 
+import org.apache.coyote.Request;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,5 +47,44 @@ public class HelloController {
                     "</body>" +
                 "</html>";
     }
+
+    @RequestMapping(value = "greeting", method = RequestMethod.GET)
+    public String greeting() {
+        return "<form method = 'post'>" +
+                "<input type = 'text' name = 'name'>" +
+                "<select name = 'language'>" +
+                "<option value = 'english'> English </option>" +
+                "<option value = 'french'> French </option>" +
+                "<option value = 'italian'> Italian </option>" +
+                "<option value = 'spanish'> Spanish </option>" +
+                "<option value = 'german'> German </option>" +
+                "</select>" +
+                "<input type = 'submit' value = 'Greet Me!' />" +
+                "</form>";
+    }
+
+    @RequestMapping(value = "greeting", method = RequestMethod.POST)
+    public static String createMessage(@RequestParam String name, @RequestParam String language) {
+        if (name == null) {
+            name = "World";
+        }
+
+        String message = "";
+
+        if (language.equals("english")) {
+            message = "Hello, ";
+        } else if (language.equals("french")) {
+            message = "Bonjour, ";
+        } else if (language.equals("italian")) {
+            message = "Ciao, ";
+        } else if (language.equals("spanish")) {
+            message = "Hola, ";
+        } else if (language.equals("german")) {
+            message = "Hallo, ";
+        }
+
+        return "<p style = 'color: red; text-align: center; margin-top: 20vh'>" + message + name + "</p>";
+    }
+
 
 }
